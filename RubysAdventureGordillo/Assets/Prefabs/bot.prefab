@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4145580476930371620}
   - component: {fileID: 9117546239092124898}
   - component: {fileID: 4363364599156504178}
+  - component: {fileID: 6807483253222306211}
   m_Layer: 0
   m_Name: bot
   m_TagString: Untagged
@@ -198,6 +199,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6807483253222306211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7109384114801238107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83962f79e215c0e49be7f55fae46c556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6596767961790050404
 PrefabInstance:
   m_ObjectHideFlags: 0
