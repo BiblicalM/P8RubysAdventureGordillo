@@ -22,12 +22,18 @@ public class RubyController : MonoBehaviour
     Vector2 lookDirection = new Vector2(1, 0);
     public GameObject projectilePrefab;
 
+    AudioSource audioSource;
+    public AudioClip throwCog;
+    public AudioClip rubyHit;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
     }
     
     // Update is called once per frame
@@ -58,14 +64,19 @@ public class RubyController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             Launch();
+            PlaySound(throwCog);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            RaycastHit2D hit2D = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
-            if(hit2D.collider != null)
+            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+            if(hit.collider != null)
             {
-                Debug.Log("Raycast has hit the object" + hit2D.collider.gameObject);
+                NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
+                if (character != null)
+                {
+                    character.DisplayDialog();
+                }
             }
         }
     }
@@ -90,12 +101,14 @@ public class RubyController : MonoBehaviour
                 return;
             }
 
-        isInvincible = true;
+            isInvincible = true;
             invincibleTimer = timeInvincible;
+            PlaySound(rubyHit);
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UIHealthBar.instance.SetValue(currentHealth/(float)maxHealth);
+        
     }
 
     void Launch()
@@ -106,5 +119,10 @@ public class RubyController : MonoBehaviour
         projectile.Launch(lookDirection, 300.0f);
 
         animator.SetTrigger("Launch");
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
